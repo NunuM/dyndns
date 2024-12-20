@@ -22,6 +22,12 @@ jobs:
       run: cargo test --verbose
     - name: Build DEB
       run: |
+        dpkg --add-architecture arm
+        apt-get update
+        apt-get install pkg-config build-essential crossbuild-essential-arm64
+        rustup target add aarch64-unknown-linux-gnu
         cargo install cargo-deb
+        cargo deb --target=aarch64-unknown-linux-gnu
         cargo deb
-    
+        
+        
