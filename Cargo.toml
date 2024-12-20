@@ -1,0 +1,29 @@
+[package]
+name = "dyndns"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Nuno <nuno@nunum.me>"]
+
+[dependencies]
+ureq = { version = "2.12.1", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0.133"
+get_if_addrs = "0.5.3"
+structopt = "0.3.26"
+
+[package.metadata.deb]
+name = "dyndns"
+maintainer = "Nuno <nuno@nunum.me>"
+depends = "libc6 (>= 2.7)"
+section = "utils"
+priority = "optional"
+description = "A dynamic DNS updater written in Rust"
+extended-description = """\
+This tool updates your dynamic DNS records automatically
+based on your current network configuration and IP address.
+"""
+assets = [
+    { source = "linux/dyndns@.timer",   dest = "etc/systemd/system/dyndns@.timer",   mode = "644"},
+    { source = "linux/dyndns@.service", dest = "etc/systemd/system/dyndns@.service", mode = "644"}
+]

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run dyndns every hour and at boot
+
+[Timer]
+OnBootSec=0min
+OnUnitActiveSec=1h
+Persistent=true
+Unit=dyndns@%i.service
+
+[Install]
+WantedBy=timers.target
