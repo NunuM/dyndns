@@ -1,5 +1,6 @@
 [package]
 name = "dyndns"
+description = "A dynamic DNS updater written in Rust"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
@@ -15,10 +16,9 @@ structopt = "0.3.26"
 [package.metadata.deb]
 name = "dyndns"
 maintainer = "Nuno <nuno@nunum.me>"
-depends = "libc6 (>= 2.7)"
+depends = "$auto"
 section = "utils"
 priority = "optional"
-description = "A dynamic DNS updater written in Rust"
 extended-description = """\
 This tool updates your dynamic DNS records automatically
 based on your current network configuration and IP address.
