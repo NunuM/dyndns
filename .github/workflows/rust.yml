@@ -20,14 +20,34 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
-    - name: Build DEB
+    - name: Install Dependencies
       run: |
-        dpkg --add-architecture arm
-        apt-get update
-        apt-get install pkg-config build-essential crossbuild-essential-arm64
-        rustup target add aarch64-unknown-linux-gnu
+        sudo dpkg --add-architecture arm64
+        sudo dpkg --add-architecture armhf
+        sudo apt-get update
+        sudo apt-get install -y \
+          pkg-config build-essential \
+          crossbuild-essential-arm64 \
+          crossbuild-essential-armhf
+
+    - name: Install Rust Targets and cargo-deb
+      run: |
+        rustup target add aarch64-unknown-linux-gnu \
+                          armv7-unknown-linux-gnueabihf \
+                          x86_64-unknown-linux-gnu
         cargo install cargo-deb
-        cargo deb --target=aarch64-unknown-linux-gnu
+
+    - name: Build for x86_64 (Default Target)
+      run: |
+        cargo build --verbose
         cargo deb
-        
-        
+
+    - name: Build for aarch64 (arm64)
+      run: |
+        cargo build --verbose --target=aarch64-unknown-linux-gnu
+        cargo deb --target=aarch64-unknown-linux-gnu
+
+    - name: Build for armv7 (armhf)
+      run: |
+        cargo build --verbose --target=armv7-unknown-linux-gnueabihf
+        cargo deb --target=armv7-unknown-linux-gnueabihf
