@@ -5,7 +5,6 @@ After=network.target
 [Service]
 Type=oneshot
 ExecStart=/opt/dyndns/dyndns
-RemainAfterExit=true
 EnvironmentFile=/etc/dyndns/%i
 
 [Install]
